@@ -1,0 +1,143 @@
+=
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="aaa.css">
+
+</head>
+
+<body>
+    <h1 style="text-align: center;">For You My Girl</h1>
+    <div class="box">
+
+        <p id="message">You are the one jiska wait sallo sai kiaa ajj tum sai yai puchna hai kaii kia tum maira proposal accept keroo
+            gi ya nhi</p>
+            <p id="sadMessage"></p>
+
+    </div>
+    <div class="parent">
+        <div class="child">
+            <button
+                onclick="celebrate()">YES</button>
+            <img id="AZIZ" src="https://media.tenor.com/o_Q8EiulE9gAAAAM/love-charlie-wilson.gif" style="width: 100px;">
+            <button id="noBtn" onclick="dodgeNo()">NO</button>
+        </div>
+    </div>
+     <script>
+        const celebrationQuotes = [
+            "You've made me the happiest person in the world! ❤️",
+            "This is the beginning of our forever! 💕",
+            "My heart is dancing with joy! 💃🕺",
+            "You just said yes to a lifetime of love! 🌹",
+            "Today is the best day of my life! 🎉",
+            "Our love story officially begins now! 📖💖",
+            "I promise to love you every single day! 🤗",
+            "You're my dream come true! ✨"
+        ];
+          const sadMessages = [
+            "Are you sure? Think again!",
+            "Please give me another chance!",
+            "My heart is breaking...",
+            "Don't do this to me!",
+            "I'll keep trying until you say YES!"
+        ];
+        
+        let noCount = 0;
+        const maxNoCount = 3;
+        
+        
+        function celebrate() {
+            // Change the image
+            document.getElementById('AZIZ').src = 'https://media.tenor.com/l7tvGwdYLJEAAAAM/excited-milk-and-mocha.gif';
+            
+            // Change the message to a random celebration quote
+            const randomQuote = celebrationQuotes[Math.floor(Math.random() * celebrationQuotes.length)];
+            document.getElementById('message').textContent = randomQuote;
+             document.querySelector('.box').style.background = 'rgba(255, 215, 240, 0.8)';
+            document.querySelector('.box').style.transform = 'scale(1.05)';
+            document.querySelector('.box').style.boxShadow = '0 0 20px rgba(255, 20, 147, 0.7)';
+            
+            // Change background to something more celebratory
+            document.body.style.backgroundImage = "url('https://i.pinimg.com/originals/13/3f/6b/133f6bcd9f1f73c5a4a6e9e8f1e8f8e2.gif')";
+            
+            // Add confetti effect (optional)
+            setTimeout(createConfetti, 500);
+        }
+        
+        function createConfetti() {
+            // Simple confetti effect
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.borderRadius = '50%';
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.top = '-10px';
+                confetti.style.zIndex = '9999';
+                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+                
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+            
+            // Add CSS for animation
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fall {
+                    to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        function dodgeNo() {
+            noCount++;
+            
+            // Change to your sad GIF
+            document.getElementById('AZIZ').src = 'https://i.pinimg.com/originals/43/ff/e1/43ffe16a0deb6681d0e4074dfda2dc0b.gif';
+            
+            // Show sad message
+            const randomSadMessage = sadMessages[Math.floor(Math.random() * sadMessages.length)];
+            document.getElementById('sadMessage').textContent = randomSadMessage;
+            document.getElementById('sadMessage').style.display = 'block';
+            
+            // Make NO button harder to click
+            if (noCount >= maxNoCount) {
+                // After max attempts, force YES
+                document.getElementById('noBtn').style.display = 'none';
+                document.getElementById('message').textContent = "I knew you'd say YES! ❤️";
+                celebrate();
+            } else {
+                // Move NO button randomly
+                const parentRect = document.querySelector('.parent').getBoundingClientRect();
+                const buttonWidth = document.getElementById('noBtn').offsetWidth;
+                const buttonHeight = document.getElementById('noBtn').offsetHeight;
+                
+                const maxX = parentRect.width - buttonWidth;
+                const maxY = parentRect.height - buttonHeight;
+                
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                
+                document.getElementById('noBtn').style.left = randomX + 'px';
+                document.getElementById('noBtn').style.top = randomY + 'px';
+                
+                // Make button smaller each time
+                const scale = 1 - (noCount * 0.1);
+                document.getElementById('noBtn').style.transform = `scale(${scale})`;
+            }
+        }
+        
+        </script>
+</body>
+
+</html>
